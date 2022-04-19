@@ -1,13 +1,39 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="script.js"></script>
+    <script src="script.js" defer></script>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <title>Rock Paper Scissors</title>
 </head>
+
 <body>
-    
+    <div class="main-container">
+        <label>Rock, Paper and Scissors Game</label>
+    </div>
+        <div class="info-container">
+            <div>Best of 5 - Round <label id="round"></label></div>
+            <div>Player: <label id="playerCount"></label></div>
+            <div>Computer: <label id="computerCount"></label></div>
+            <div class="results"></div>
+        </div>
+        <div class="buttons-container">
+            <button class="btn" value="rock">✊</button>
+            <button class="btn" value="paper">✋</button>
+            <button class="btn" value="scissors">✌</button>
+        </div>
+    <div class="bottom-container">
+        <label>Copyright © rafagoomes 
+            <a href="https://github.com/rafagoomes">
+                <i class="fa fa-github" style="font-size:32px"></i>
+            </a>
+        </label>
+    </div>
+
 </body>
+
 </html>

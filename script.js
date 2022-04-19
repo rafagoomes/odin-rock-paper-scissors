@@ -5,35 +5,69 @@ function computerPlay() {
     //console.log(options[selectedOption]);
     return options[selectedOption];
 }
-//Play round
-function playRound(computerSelection, playerSelection) {
-    if (playerSelection === 'rock' && computerSelection === 'paper') {
-        return "You lose! Paper beats rock."
-    } else if (playerSelection === 'paper' && computerSelection === 'rock') {
-        return "You win! Paper beats rock."
-    } else if (playerSelection === 'rock' && computerSelection === 'rock') {
-        return `Draw - ${playerSelection} x ${computerSelection}`;
+//Document mapping
+const results = document.querySelector('.results');
+const buttons = document.querySelectorAll('button');
+const playerCount = document.querySelector('#playerCount');
+const computerCount = document.querySelector('#computerCount');
+const roundCount = document.querySelector('#round');
+const info_container = document.querySelector('.info-container');
+
+let playerCounter = 0;
+let computerCounter = 0;
+let drawCounter = 0;
+let roundCounter = 0;
+
+playerCount.textContent = playerCounter;
+computerCount.textContent = computerCounter;
+roundCount.textContent = roundCounter;
+
+function playGame(playerSelection) {
+    while (playerCounter < 5 || computerCounter < 5) {
+        roundCounter++;
+        roundCount.textContent = roundCounter;
+        
+        let computerSelection = computerPlay();
+
+    if ( playerSelection === computerSelection) {
+        return results.textContent = `Draw. ${playerSelection} x ${computerSelection}.`
     }
-    if (playerSelection === 'scissors' && computerSelection === 'rock') {
-        return "You lose! Rock beats scissors."
-    } else if (playerSelection === 'rock' && computerSelection === 'scissors') {
-        return "You win! Rock beats scissors."
-    } else if (playerSelection === 'scissors' && computerSelection === 'scissors') {
-        return `Draw - ${playerSelection} x ${computerSelection}`;
-    }
-    if (playerSelection === 'paper' && computerSelection === 'scissors') {
-        return "You lose! Scissor beats paper."
-    } else if (playerSelection === 'scissors' && computerSelection === 'paper') {
-        return "You win! Scissor beats paper."
-    } else if (playerSelection === 'paper' && computerSelection === 'paper') {
-        return `Draw - ${playerSelection} x ${computerSelection}`;
+    if (playerSelection === 'rock' && computerSelection === 'paper' ||
+        playerSelection === 'scissors' && computerSelection === 'rock' ||
+        playerSelection === 'paper' && computerSelection === 'scissors') {
+            computerCounter++;
+            computerCount.textContent = computerCounter;
+            return results.textContent = `Round won by computer - ${computerSelection} beats ${playerSelection}.`
+        }
+    if (playerSelection === 'rock' && computerSelection === 'scissors' ||
+        playerSelection === 'paper' && computerSelection === 'rock' || 
+        playerSelection === 'scissors' && computerSelection === 'paper') {
+            playerCounter++;
+            playerCount.textContent = playerCounter;
+            return results.textContent = `Round won by player - ${playerSelection} beats ${computerSelection}.`
+        }
+    } 
+}
+
+function checkWinner() {
+    let e = document.createElement('div');
+    if (playerCounter > computerCounter) {
+        e.innerHTML = "You won!";
+        e.style.color = 'green';
+        e.style.fontWeight = 'bold';
+        info_container.appendChild(e);
+    } else {
+        e.innerHTML = "You lost to Computer!";
+        e.style.color = 'red';
+        e.style.fontWeight = 'bold';
+        info_container.appendChild(e);
     }
 }
-//Play game of 5 rounds
-function game() {
-    for (i = 1; i <= 5; i++) {
-        const playerSelection = prompt("Type one of the options - Scissors, Paper or Rock;");
-        console.log(playRound(computerPlay(), playerSelection.toLowerCase()));
-    }
-}
-game();
+
+buttons.forEach(button => button.addEventListener('click', function() {
+     playGame(button.value);
+     if (playerCounter === 5 || computerCounter === 5) {
+        buttons.forEach(button => button.disabled=true);
+        checkWinner();
+     }
+}));
